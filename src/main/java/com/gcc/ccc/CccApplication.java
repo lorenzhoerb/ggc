@@ -8,6 +8,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -21,15 +22,27 @@ public class CccApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
-		List<String> data = readFile("level1/level1_2.in");
+		List<String> data = readFile("level1/level1_5.in");
 		int mapSize = Integer.parseInt(data.get(0));
-		int coordinatesAmount = Integer.parseInt(data.get(mapSize+1));
-		for(int i = mapSize+2; i <  mapSize+2+ coordinatesAmount;i++) {
-			String[] coordinate = data.get(i).split(",");
-			int x = Integer.parseInt(coordinate[0]);
-			int y = Integer.parseInt(coordinate[1]);
-			String outLine = "" + data.get(y+1).charAt(x);
-			System.out.println(outLine);
+		int coordinatesAmount = Integer.parseInt(data.get(mapSize + 1));
+
+		// Define the output file path
+		String outputPath = Paths.get("src", "main", "resources", "output.txt").toString();
+
+		try {
+			FileWriter writer = new FileWriter(outputPath);
+			for (int i = mapSize + 2; i < mapSize + 2 + coordinatesAmount; i++) {
+				String[] coordinate = data.get(i).split(",");
+				int x = Integer.parseInt(coordinate[0]);
+				int y = Integer.parseInt(coordinate[1]);
+				String outLine = "" + data.get(y + 1).charAt(x);
+
+				// Write to the output file
+				writer.write(outLine + "\n");
+			}
+			writer.close();
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 	}
 
