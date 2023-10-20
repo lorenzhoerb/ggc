@@ -23,7 +23,7 @@ public class CccApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
-		List<String> data = readFile("level2/level2_example.in");
+		List<String> data = readFile("level2/level2_5.in");
 		int mapSize = Integer.parseInt(data.get(0));
 		int coordinatesAmount = Integer.parseInt(data.get(mapSize + 1));
 		char[][] map = new char[mapSize][mapSize];
@@ -38,8 +38,9 @@ public class CccApplication implements CommandLineRunner {
 			for (int i = mapSize + 2; i < mapSize + 2 + coordinatesAmount; i++) {
 				int[][] coordinates = parseCoordinates(data.get(i));
 
+				IslandChecker ic = new IslandChecker(map);
 				// Write to the output file
-				String tmp = sameIsland(map, coordinates, null) ? "SAME" : "DIFFERENT";
+				String tmp = ic.areOnSameIsland(coordinates[0], coordinates[1]) ? "SAME" : "DIFFERENT";
 				writer.write(tmp + "\n");
 			}
 			writer.close();
