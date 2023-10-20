@@ -22,7 +22,7 @@ public class CccApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
-		List<String> data = readFile("level1/level1_5.in");
+		List<String> data = readFile("level2/level2_1.in");
 		int mapSize = Integer.parseInt(data.get(0));
 		int coordinatesAmount = Integer.parseInt(data.get(mapSize + 1));
 		char[][] map = new char[mapSize][mapSize];
@@ -35,18 +35,28 @@ public class CccApplication implements CommandLineRunner {
 		try {
 			FileWriter writer = new FileWriter(outputPath);
 			for (int i = mapSize + 2; i < mapSize + 2 + coordinatesAmount; i++) {
-				String[] coordinate = data.get(i).split(",");
-				int x = Integer.parseInt(coordinate[0]);
-				int y = Integer.parseInt(coordinate[1]);
-				String outLine = "" + map[y][x];
+				int[][] coordinates = parseCoordinates(data.get(i));
 
 				// Write to the output file
-				writer.write(outLine + "\n");
+				// writer.write(outLine + "\n");
 			}
 			writer.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+
+	private int[][] parseCoordinates(String line) {
+		String[] stringCoordinates = line.split(" ");
+		int[][] coordinates = new int[stringCoordinates.length][2];
+		for (int i = 0; i < stringCoordinates.length; i++) {
+			String[] strCoordinates = stringCoordinates[i].split(",");
+			int x = Integer.parseInt(strCoordinates[0]);
+			int y = Integer.parseInt(strCoordinates[1]);
+			coordinates[i][0] = x;
+			coordinates[i][1] = y;
+		}
+		return coordinates;
 	}
 
 	private List<String> readFile(String input) {
