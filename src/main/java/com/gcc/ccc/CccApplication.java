@@ -68,7 +68,39 @@ public class CccApplication implements CommandLineRunner {
 		return null;
 	}
 
-	private String sameIsland(char[][] map, int[] coord){
-		return null;
+	private boolean sameIsland(char[][] map, int[][] coord, List<int[]> checked){
+		if(map[coord[0][1]][coord[0][0]] == 'W' || map[coord[1][1]][coord[1][0]] == 'W') {
+			return false;
+		}
+		if(checked.contains(new int[]{coord[0][0],coord[0][1]}))
+			return false;
+		if (checked == null)
+			checked = new ArrayList<>();
+		if(coord[0][1] == coord[1][1] && (coord[0][0] + 1 == coord[1][0] || coord[0][0] -1 == coord[1][0]))
+			return true;
+		if(coord[0][0] == coord[1][0] && (coord[0][1] + 1 == coord[1][1] || coord[0][1] -1 == coord[1][1]))
+			return true;
+		int[] tmp = {coord[0][0],coord[0][1]};
+
+		checked.add(tmp);
+		int[][] up = coord;
+		up[0][1]++;
+		if(sameIsland(map, up,checked))
+			return true;
+		int[][] down = coord;
+		up[0][1]--;
+		if(sameIsland(map, up,checked))
+			return true;
+		int[][] right = coord;
+		up[0][0]++;
+		if(sameIsland(map, up,checked))
+			return true;
+		int[][] left = coord;
+		up[0][0]--;
+		if(sameIsland(map, up,checked))
+			return true;
+
+
+		return true;
 	}
 }
