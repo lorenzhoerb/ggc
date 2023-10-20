@@ -81,47 +81,16 @@ public class CccApplication implements CommandLineRunner {
 		return null;
 	}
 
-	private boolean sameIsland(char[][] map, int[][] coord, List<int[]> checked){
-		if(map[coord[0][1]][coord[0][0]] == 'W' || map[coord[1][1]][coord[1][0]] == 'W') {
-			return false;
-		}
-		if (coord[0][0] == coord[1][0] && coord[0][1] == coord[1][1])
-			return true;
-		if (checked == null)
-			checked = new ArrayList<>();
-
-		for (int[] ch: checked
-			 ) {
-			if((ch[0] ==coord[0][0] && ch[1] == coord[0][1]))
+	private boolean shipRouteTwice(int[][] route){
+		for (int i = 0; i < route.length; i++) {
+			for (int j = i+1; j < route.length; j++) {
+				if(same(route[i], route[j]));
 				return false;
+			}
 		}
-
-		int[] tmp = {coord[0][0],coord[0][1]};
-
-		checked.add(tmp);
-		if(coord[0][1] == coord[1][1] && (coord[0][0] + 1 == coord[1][0] || coord[0][0] -1 == coord[1][0]))
-			return true;
-		if(coord[0][0] == coord[1][0] && (coord[0][1] + 1 == coord[1][1] || coord[0][1] -1 == coord[1][1]))
-			return true;
-
-		int[][] up = coord;
-		up[0][1]++;
-		if(sameIsland(map, up,checked))
-			return true;
-		int[][] down = coord;
-		down[0][1]--;
-		if(sameIsland(map, down,checked))
-			return true;
-		int[][] right = coord;
-		right[0][0]++;
-		if(sameIsland(map, right,checked))
-			return true;
-		int[][] left = coord;
-		left[0][0]--;
-		if(sameIsland(map, left,checked))
-			return true;
-
-
-		return false;
+		return true;
+	}
+	private boolean same(int[] r1, int[] r2){
+		return (r1[0] == r2[0] && r1[1] == r2[1]);
 	}
 }
