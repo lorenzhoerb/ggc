@@ -6,6 +6,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileWriter;
 import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
@@ -20,18 +21,15 @@ public class CccApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
-		List<String> data = readFile("level1/level1_1.in");
+		List<String> data = readFile("level1/level1_2.in");
 		int mapSize = Integer.parseInt(data.get(0));
 		int coordinatesAmount = Integer.parseInt(data.get(mapSize+1));
-
 		for(int i = mapSize+2; i <  mapSize+2+ coordinatesAmount;i++) {
-			System.out.println(data.get(i));
 			String[] coordinate = data.get(i).split(",");
 			int x = Integer.parseInt(coordinate[0]);
 			int y = Integer.parseInt(coordinate[1]);
-
-			System.out.println(data.get(y).charAt(x));
-
+			String outLine = "" + data.get(y+1).charAt(x);
+			System.out.println(outLine);
 		}
 	}
 
