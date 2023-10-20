@@ -10,6 +10,7 @@ import java.io.FileWriter;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
@@ -22,7 +23,7 @@ public class CccApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
-		List<String> data = readFile("level2/level2_1.in");
+		List<String> data = readFile("level2/level2_example.in");
 		int mapSize = Integer.parseInt(data.get(0));
 		int coordinatesAmount = Integer.parseInt(data.get(mapSize + 1));
 		char[][] map = new char[mapSize][mapSize];
@@ -38,7 +39,8 @@ public class CccApplication implements CommandLineRunner {
 				int[][] coordinates = parseCoordinates(data.get(i));
 
 				// Write to the output file
-				// writer.write(outLine + "\n");
+				String tmp = sameIsland(map, coordinates, null) ? "SAME" : "DIFFERENT";
+				writer.write(tmp + "\n");
 			}
 			writer.close();
 		} catch (Exception e) {
@@ -82,35 +84,42 @@ public class CccApplication implements CommandLineRunner {
 		if(map[coord[0][1]][coord[0][0]] == 'W' || map[coord[1][1]][coord[1][0]] == 'W') {
 			return false;
 		}
-		if(checked.contains(new int[]{coord[0][0],coord[0][1]}))
-			return false;
+
 		if (checked == null)
 			checked = new ArrayList<>();
+
+		for (int[] ch: checked
+			 ) {
+			if((ch[0] ==coord[0][0] && ch[1] == coord[0][1]))
+				return false;
+		}
+
+		int[] tmp = {coord[0][0],coord[0][1]};
+
+		checked.add(tmp);
 		if(coord[0][1] == coord[1][1] && (coord[0][0] + 1 == coord[1][0] || coord[0][0] -1 == coord[1][0]))
 			return true;
 		if(coord[0][0] == coord[1][0] && (coord[0][1] + 1 == coord[1][1] || coord[0][1] -1 == coord[1][1]))
 			return true;
-		int[] tmp = {coord[0][0],coord[0][1]};
 
-		checked.add(tmp);
 		int[][] up = coord;
 		up[0][1]++;
 		if(sameIsland(map, up,checked))
 			return true;
 		int[][] down = coord;
-		up[0][1]--;
-		if(sameIsland(map, up,checked))
+		down[0][1]--;
+		if(sameIsland(map, down,checked))
 			return true;
 		int[][] right = coord;
-		up[0][0]++;
-		if(sameIsland(map, up,checked))
+		right[0][0]++;
+		if(sameIsland(map, right,checked))
 			return true;
 		int[][] left = coord;
-		up[0][0]--;
-		if(sameIsland(map, up,checked))
+		left[0][0]--;
+		if(sameIsland(map, left,checked))
 			return true;
 
 
-		return true;
+		return false;
 	}
 }
