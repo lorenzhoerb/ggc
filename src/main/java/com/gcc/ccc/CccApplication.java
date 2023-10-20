@@ -25,7 +25,10 @@ public class CccApplication implements CommandLineRunner {
 		List<String> data = readFile("level1/level1_5.in");
 		int mapSize = Integer.parseInt(data.get(0));
 		int coordinatesAmount = Integer.parseInt(data.get(mapSize + 1));
-
+		char[][] map = new char[mapSize][mapSize];
+		for (int i = 0; i < mapSize;i++){
+			map[i] = data.get(i+1).toCharArray();
+		}
 		// Define the output file path
 		String outputPath = Paths.get("src", "main", "resources", "output.txt").toString();
 
@@ -35,7 +38,7 @@ public class CccApplication implements CommandLineRunner {
 				String[] coordinate = data.get(i).split(",");
 				int x = Integer.parseInt(coordinate[0]);
 				int y = Integer.parseInt(coordinate[1]);
-				String outLine = "" + data.get(y + 1).charAt(x);
+				String outLine = "" + map[y][x];
 
 				// Write to the output file
 				writer.write(outLine + "\n");
@@ -62,6 +65,10 @@ public class CccApplication implements CommandLineRunner {
 			System.out.println("An error occurred.");
 			e.printStackTrace();
 		}
+		return null;
+	}
+
+	private String sameIsland(char[][] map, int[] coord){
 		return null;
 	}
 }
