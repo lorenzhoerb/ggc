@@ -84,7 +84,8 @@ public class CccApplication implements CommandLineRunner {
 		if(map[coord[0][1]][coord[0][0]] == 'W' || map[coord[1][1]][coord[1][0]] == 'W') {
 			return false;
 		}
-
+		if (coord[0][0] == coord[1][0] && coord[0][1] == coord[1][1])
+			return true;
 		if (checked == null)
 			checked = new ArrayList<>();
 
