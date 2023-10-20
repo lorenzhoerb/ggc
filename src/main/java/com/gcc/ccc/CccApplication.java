@@ -21,7 +21,18 @@ public class CccApplication implements CommandLineRunner {
 	@Override
 	public void run(String... args) throws Exception {
 		List<String> data = readFile("level1/level1_1.in");
-		System.out.println(data);
+		int mapSize = Integer.parseInt(data.get(0));
+		int coordinatesAmount = Integer.parseInt(data.get(mapSize+1));
+
+		for(int i = mapSize+2; i <  mapSize+2+ coordinatesAmount;i++) {
+			System.out.println(data.get(i));
+			String[] coordinate = data.get(i).split(",");
+			int x = Integer.parseInt(coordinate[0]);
+			int y = Integer.parseInt(coordinate[1]);
+
+			System.out.println(data.get(y).charAt(x));
+
+		}
 	}
 
 	private List<String> readFile(String input) {
